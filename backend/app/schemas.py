@@ -19,9 +19,32 @@ class UserOut(BaseModel):
     id: int
     username: str
     email: str
+    is_verified: bool = False
     created_at: datetime
 
     model_config = {"from_attributes": True}
+
+
+class MessageOut(BaseModel):
+    message: str
+    email: str | None = None
+
+
+class ForgotPasswordIn(BaseModel):
+    email: str = Field(min_length=5, max_length=255)
+
+
+class ResetPasswordIn(BaseModel):
+    token: str
+    password: str = Field(min_length=6, max_length=128)
+
+
+class VerifyEmailIn(BaseModel):
+    token: str
+
+
+class ResendVerificationIn(BaseModel):
+    email: str = Field(min_length=5, max_length=255)
 
 
 class Token(BaseModel):

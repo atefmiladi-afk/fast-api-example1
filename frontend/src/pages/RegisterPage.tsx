@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { register, setSession } from "@/lib/api"
+import { register } from "@/lib/api"
 
 export function RegisterPage() {
   const navigate = useNavigate()
@@ -13,16 +13,18 @@ export function RegisterPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
+  const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault()
     setError("")
+    setMessage("")
     setLoading(true)
     try {
       const data = await register(username, email, password)
-      setSession(data.access_token, data.user)
-      navigate("/learn")
+      setMessage(data.message)
+      setTimeout(() => navigate("/login"), 1800)
     } catch (err) {
       setError(err instanceof Error ? err.message : "Registration failed")
     } finally {
@@ -53,6 +55,7 @@ export function RegisterPage() {
               <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} minLength={6} required />
             </div>
             {error ? <p className="text-sm text-destructive">{error}</p> : null}
+            {message ? <p className="text-sm text-primary">{message}</p> : null}
             <Button className="w-full" type="submit" disabled={loading}>
               {loading ? "Creating..." : "Register"}
             </Button>

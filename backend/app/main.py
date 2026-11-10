@@ -1,3 +1,5 @@
+from sqlalchemy import inspect, text
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -6,6 +8,20 @@ from app.routes import api_router
 from app.seed import seed_if_empty
 
 Base.metadata.create_all(bind=engine)
+
+
+def _ensure_user_verified_column() -> None:
+    inspector = inspect(engine)
+    if "users" not in inspector.get_table_names():
+        return
+    columns = {col["name"] for col in inspector.get_columns("users")}
+    if "is_verified" in columns:
+        return
+    with engine.begin() as conn:
+        conn.execute(text("ALTER TABLE users ADD COLUMN is_verified BOOLEAN NOT NULL DEFAULT TRUE"))
+
+
+_ensure_user_verified_column()
 
 app = FastAPI(title="Deutsch Lernen", version="1.0.0")
 

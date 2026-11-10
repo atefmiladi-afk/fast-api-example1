@@ -5,6 +5,7 @@ export type User = {
   id: number
   username: string
   email: string
+  is_verified?: boolean
   created_at: string
 }
 
@@ -81,7 +82,7 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
 }
 
 export function register(username: string, email: string, password: string) {
-  return request<{ access_token: string; user: User }>("/api/auth/register", {
+  return request<{ message: string; email?: string }>("/api/auth/register", {
     method: "POST",
     body: JSON.stringify({ username, email, password }),
   })
@@ -91,6 +92,34 @@ export function login(username: string, password: string) {
   return request<{ access_token: string; user: User }>("/api/auth/login", {
     method: "POST",
     body: JSON.stringify({ username, password }),
+  })
+}
+
+export function forgotPassword(email: string) {
+  return request<{ message: string }>("/api/auth/forgot-password", {
+    method: "POST",
+    body: JSON.stringify({ email }),
+  })
+}
+
+export function resetPassword(token: string, password: string) {
+  return request<{ message: string }>("/api/auth/reset-password", {
+    method: "POST",
+    body: JSON.stringify({ token, password }),
+  })
+}
+
+export function verifyEmail(token: string) {
+  return request<{ message: string }>("/api/auth/verify-email", {
+    method: "POST",
+    body: JSON.stringify({ token }),
+  })
+}
+
+export function resendVerification(email: string) {
+  return request<{ message: string }>("/api/auth/resend-verification", {
+    method: "POST",
+    body: JSON.stringify({ email }),
   })
 }
 

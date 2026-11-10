@@ -3,8 +3,11 @@ import { Navigate, Route, Routes } from "react-router-dom"
 import { getToken } from "@/lib/api"
 import { CategoryPage } from "@/pages/CategoryPage"
 import { LearnPage } from "@/pages/LearnPage"
+import { ForgotPasswordPage } from "@/pages/ForgotPasswordPage"
 import { LoginPage } from "@/pages/LoginPage"
 import { RegisterPage } from "@/pages/RegisterPage"
+import { ResetPasswordPage } from "@/pages/ResetPasswordPage"
+import { VerifyEmailPage } from "@/pages/VerifyEmailPage"
 
 function Protected({ children }: { children: ReactNode }) {
   if (!getToken()) return <Navigate to="/login" replace />
@@ -36,6 +39,16 @@ export default function App() {
           </Guest>
         }
       />
+      <Route
+        path="/forgot-password"
+        element={
+          <Guest>
+            <ForgotPasswordPage />
+          </Guest>
+        }
+      />
+      <Route path="/reset-password" element={<ResetPasswordPage />} />
+      <Route path="/verify-email" element={<VerifyEmailPage />} />
       <Route
         path="/learn"
         element={

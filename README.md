@@ -9,7 +9,7 @@ Learn German with picture cards, grouped by category.
 
 ## Run
 
-Copy `backend/.env.example` to `backend/.env` and set `DATABASE_URL` and `SECRET_KEY`.
+Copy `backend/.env.example` to `backend/.env` and set `DATABASE_URL`, `SECRET_KEY`, and SMTP settings for verification and password-reset emails.
 
 ```bash
 # Backend
@@ -23,4 +23,4 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:5173 — login or register, then pick a category (Essen, Tiere, Familie, Farben, Haus, Kleidung).
+Open http://localhost:5173 — register, verify the email link, then sign in. Use Forgot password to reset via email.

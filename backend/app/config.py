@@ -10,6 +10,13 @@ class Settings(BaseSettings):
     secret_key: str
     algorithm: str = "HS256"
     access_token_expire_minutes: int = 10080
+    frontend_url: str = "http://localhost:5173"
+    smtp_host: str = ""
+    smtp_port: int = 587
+    smtp_user: str = ""
+    smtp_password: str = ""
+    smtp_from: str = "Deutsch Lernen <noreply@localhost>"
+    smtp_tls: bool = True
 
     model_config = SettingsConfigDict(
         env_file=str(ENV_FILE),
