@@ -9,11 +9,12 @@ Learn German with picture cards, grouped by category.
 
 ## Run
 
-PostgreSQL database: `deutsch_lernen` (user `deutsch`).
+Copy `backend/.env.example` to `backend/.env` and set `DATABASE_URL` and `SECRET_KEY`.
 
 ```bash
 # Backend
 cd backend
+cp .env.example .env
 ./venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000
 
 # Frontend
